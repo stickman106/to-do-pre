@@ -10,6 +10,7 @@ let items = [
 const listElement = document.querySelector(".to-do__list");
 const formElement = document.querySelector(".to-do__form");
 const inputElement = document.querySelector(".to-do__input");
+const taskTemplate = document.getElementById("to-do__item-template");
 
 function loadTasks() {
     const tasks = JSON.parse(localStorage.getItem("tasks"));
@@ -17,8 +18,7 @@ function loadTasks() {
 }
 
 function createItem(item) {
-    const template = document.getElementById("to-do__item-template");
-    const clone = template.content
+    const clone = taskTemplate.content
         .querySelector(".to-do__item")
         .cloneNode(true);
 
@@ -64,6 +64,7 @@ function createItem(item) {
 formElement.addEventListener("submit", (e) => {
     e.preventDefault();
     const taskText = inputElement.value;
+    if (taskText.trim() === "") return;
     const newTask = createItem(taskText);
     listElement.prepend(newTask);
     items = getTasksFromDOM();
